@@ -1,11 +1,15 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dao.StuDao;
 
 /**
  * Servlet implementation class LoginServlet
@@ -27,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -35,7 +39,33 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String username =request.getParameter("username");
+		String password = request.getParameter("password");
+		String identity = request.getParameter("identity");
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		System.out.println("name");
+		if(identity!=null)
+		switch (identity) {
+		case "student":
+				if(username==null)out.println("登陆失败");
+				else if(StuDao.isNewUsername(username))
+					out.print("无此帐号");
+				else if (StuDao.isCorrectPassword(username, password))out.println("登陆成功");
+				else out.println("密码错误");
+			break;
+		case "teacher":
+			
+			break;
+		case "manager":
+	
+	break;
+
+		default:
+			break;
+		}
+		
+		
 	}
 
 }
