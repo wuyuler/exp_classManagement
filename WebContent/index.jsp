@@ -8,14 +8,20 @@
 </head>
 
 <body>
-<form action="servlet/LoginServlet" method="post">
-    帐号：<input type="text" name="username">
-   	密码：<input type="password" name="password"><br>
-   	<input type="radio" name="identity" value="student" checked="checked" />学生 
-	<input type="radio" name="identity" value="teacher" />教师 
-	<input type="radio" name="identity" value="manager" />管理员
-   	<input type="submit" value="登录">
-   	</form>
-<!--    	<input type="button" value="注册" onclick="javascrtpt:window.location.href='reg.jsp'"> -->
+<!-- <form action="servlet/insertStu" method="post"> -->
+<!--     帐号：<input type="text" name="username"> -->
+<!--    	密码：<input type="password" name="password"><br> -->
+<!--    	<input type="radio" name="identity" value="student" checked="checked" />学生  -->
+<!-- 	<input type="radio" name="identity" value="teacher" />教师  -->
+<!-- 	<input type="radio" name="identity" value="manager" />管理员 -->
+<!--    	<input type="submit" value="登录"> -->
+<!--    	</form> -->
+	<a href="servlet/InsertStu">Get方式请求访问Helloservlet</a>
+
+  
+	<form action="servlet/InsertStu" method="get">
+	<input type="submit" value="登陆">
+	</form>
+   	<input type="button" value="注册" onclick="javascrtpt:window.location.href='stu.jsp'">
 </body>
 </html>
