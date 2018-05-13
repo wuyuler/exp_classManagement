@@ -4,9 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>登陆</title>
 </head>
-<body>
 
+<body>
+<form action="servlet/LoginServlet" method="post">
+    帐号：<input type="text" name="username">
+   	密码：<input type="password" name="password"><br>
+   	<input type="radio" name="identity" value="student" checked="checked" />学生 
+	<input type="radio" name="identity" value="teacher" />教师 
+	<input type="radio" name="identity" value="manager" />管理员
+   	<input type="submit" value="登录">
+   	</form>
+<!--    	<input type="button" value="注册" onclick="javascrtpt:window.location.href='reg.jsp'"> -->
 </body>
 </html>

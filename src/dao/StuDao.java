@@ -246,25 +246,50 @@ public class StuDao {
 		}
 		
 		//判断是否是新建帐号
-		public static Boolean isNewUsername(String id) {
+		public static Boolean FirstCreateUsername(String id) {
 			
 			Student stu=StuDao.getStudentById(id);
 			System.out.println(stu.getName()+stu.getUsername());
 			if(stu.getUsername()==null)return true;
 			else return false;
 		}
-		
-		//帐号密码是否匹配
-		public static Boolean isCorrectPassword(String id,String username,String password) {
-			Student stu=StuDao.getStudentById(id);
-			
-			 if(stu!=null&&stu.getUsername().equals(username)&&stu.getPassword().equals(password)) {
-				return true;
+		//判断帐号是否已注册
+		public static Boolean isNewUsername(String username) {
+			ArrayList<Student> list = null;
+			try {
+				list = StuDao.getAllStudents();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			 else return false;
+			for(Student stu:list) {
+				if(stu.getUsername()!=null)
+				if(stu.getUsername().equals(username))
+					return false;
+			}
+			return true;
 		}
 		
+		//帐号密码是否匹配
+		public static Boolean isCorrectPassword(String username,String password) {
+			ArrayList<Student> list = null;
+			try {
+				list = StuDao.getAllStudents();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for(Student stu:list) {
+				
+				if(stu.getUsername()!=null&&stu.getUsername().equals(username)&&stu.getPassword().equals(password))
+					return true;
+			}
+			return false;
+			
+			 
+		}
 		
+	
 	
 	
 	public static void main(String[] args) {
@@ -297,8 +322,8 @@ public class StuDao {
 //		if(StuDao.isNewUsername("1"))System.out.println("未建立帐号");
 //		else System.out.println("已有帐号");
 		
-		//帐号密码是否正确
-//		if(StuDao.isCorrectPassword("1600200010", "admin", "admin"))System.out.println("正确");
+//		//帐号密码是否正确
+//		if(StuDao.isCorrectPassword("admin", "admin3"))System.out.println("正确");
 //		else System.out.println("错误请检查一下");
 		
 //		//测试删除学生
@@ -306,12 +331,19 @@ public class StuDao {
 //		if(StuDao.getStudentById("99999999")==null)System.out.println("删除成功");
 //		else System.out.println("删除失败");
 		
-		//测试修改信息
-		Student stu = new Student();
-		stu.setId("1600200010");
+//		//测试修改信息
+//		Student stu = new Student();
+//		stu.setId("1600200010");
+//		
+//		StuDao.updateInfo(stu);
 		
-		StuDao.updateInfo(stu);
-		
+//		//测试检验是否为新帐号
+//		String username = "admin3";
+//		if(StuDao.isNewUsername(username)) {
+//			System.out.println("可以使用");
+//		}
+//		else System.out.println("一存在");
+//		
 		
 	}
 		
