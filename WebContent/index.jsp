@@ -13,7 +13,7 @@
    	密码：<input type="password" name="password"><br>
    	<input type="radio" name="identity" value="student" checked="checked" />学生 
 	<input type="radio" name="identity" value="teacher" />教师 
-	<input type="radio" name="identity" value="manager" />管理员
+	<input type="radio" name="identity" value="manager" />管理员<br>
    	<input type="submit" value="登录">
    	</form>
    	<input type="button" value="注册" onclick="javascrtpt:window.location.href='stu.jsp'">

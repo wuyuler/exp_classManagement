@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import utils.DBhelper;
-import entity.Student;
 
+import entity.Student;
 import utils.Constant;
+import utils.DBhelper;
+import utils.Setting;
 
 public class StuDao {
 	
@@ -21,7 +22,7 @@ public class StuDao {
 		ArrayList<Student> list = new ArrayList<Student>();
 		
 		try {
-			String sql = "select * from "+Constant.STUTABLE+";";
+			String sql = "select * from "+Constant.STUTABLE+" order by id;";
 			conn = DBhelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs=stmt.executeQuery();
@@ -107,6 +108,60 @@ public class StuDao {
 				
 			}
 			}
+		
+		//根据id找到学生
+				public static  Student getStudentByUsername( String username) {
+					Connection conn=null;
+					PreparedStatement stmt = null;
+					ResultSet rs = null;
+					
+					try {
+						String sql = "select * from "+Constant.STUTABLE+" where "+Constant.USERNAME_STU+"=?;";
+						
+						conn = DBhelper.getConnection();
+						stmt = conn.prepareStatement(sql);
+						//取代sql语句里第几个问号，从1开始
+						stmt.setString(1, username);
+						rs=stmt.executeQuery();
+						if(rs.next()) {
+							Student stu = new Student();
+							stu.setUsername(rs.getString(Constant.USERNAME_STU));
+							stu.setPassword(rs.getString(Constant.PASSWORD_STU));
+							stu.setId(rs.getString(Constant.ID_STU));
+							stu.setBirthday(rs.getString(Constant.BIRTHDAY_STU));
+							stu.setSex(rs.getString(Constant.SEX_STU));
+							stu.setName(rs.getString(Constant.NAME_STU));
+							stu.setEmail(rs.getString(Constant.EMAIL_STU));
+							stu.setInterview(rs.getString(Constant.INTERVIEW_STU));
+							stu.setPhone(rs.getString(Constant.PHONE_STU));
+							
+							
+						return stu;
+					}
+						else return null;
+						
+						
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+						return null;
+					}finally {
+						try {
+							stmt.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							rs.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						
+					}
+					}
 		
 		//插入学生
 			public static  void insertStudent(Student stu) {
@@ -228,6 +283,58 @@ public class StuDao {
 				}
 				
 			}
+			
+			//录入成绩,同个一个成绩数组和科目编号
+			public static void updateScores(ArrayList<Integer> scoreList,int id_subject) {
+				Connection conn=null;
+				PreparedStatement stmt = null;
+				ArrayList<Student> list = null;
+				try {
+					list = StuDao.getAllStudents();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					
+					conn = DBhelper.getConnection();
+					String sql="";
+					for(int i=0;i<list.size()&&i<scoreList.size();i++) {
+						
+						sql = "update "+Constant.STUTABLE+" set s"+id_subject+"="+scoreList.get(i)+" where "+Constant.ID_STU+"='"+list.get(i).getId()+"';";
+						stmt = conn.prepareStatement(sql);
+						stmt.executeUpdate();
+						System.out.println(sql);
+					}
+					
+					
+					
+					
+					
+					
+					
+					
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					
+				}finally {
+					try {
+						stmt.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+					
+				}
+				
+				
+			}
+			
 		//判断是否为新学号
 		public static Boolean isNewID(String id) {
 			ArrayList<Student> list=new ArrayList<Student>();
@@ -344,7 +451,12 @@ public class StuDao {
 //		}
 //		else System.out.println("一存在");
 //		
-		
+		//测试录入成绩
+//		ArrayList<Integer> list = new ArrayList<Integer>();
+//		for(int i = 0;i <10;i++) {
+//			list.add(i);
+//		}
+//		StuDao.updateScores(list, 0);
 	}
 		
 
