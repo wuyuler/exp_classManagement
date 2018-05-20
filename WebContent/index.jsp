@@ -16,6 +16,6 @@
 	<input type="radio" name="identity" value="manager" />管理员<br>
    	<input type="submit" value="登录">
    	</form>
-   	<input type="button" value="注册" onclick="javascrtpt:window.location.href='stu.jsp'">
+   	<input type="button" value="注册" onclick="javascrtpt:window.location.href='register.jsp'">
 </body>
 </html>

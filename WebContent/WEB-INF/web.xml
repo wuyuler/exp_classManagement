@@ -17,7 +17,6 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/servlet/LoginServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>UpdateInfo</servlet-name>
     <servlet-class>servlet.UpdateInfo</servlet-class>
@@ -26,4 +25,38 @@
     <servlet-name>UpdateInfo</servlet-name>
     <url-pattern>/servlet/UpdateInfo</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>servlet.RegServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegServlet</servlet-name>
+    <url-pattern>/servlet/RegServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AddServlet</servlet-name>
+    <servlet-class>servlet.AddServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddServlet</servlet-name>
+    <url-pattern>/servlet/AddServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteServlet</servlet-name>
+    <servlet-class>servlet.DeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteServlet</servlet-name>
+    <url-pattern>/servlet/DeleteServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>UpdateScores</servlet-name>
+    <servlet-class>servlet.UpdateScores</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateScores</servlet-name>
+    <url-pattern>/servlet/UpdateScores</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

@@ -1,5 +1,7 @@
 package entity;
 
+import utils.Setting;
+
 public class Student {
 	
 	private String id;
@@ -11,10 +13,37 @@ public class Student {
 	private String email;
 	private String phone;
 	private String interview;
-	
+	private int[] scores = new int[Setting.numOfSubject];
 	public Student() {
 		
 	}
+	
+	
+
+	public Student(String id,String name, String sex, String birthday, String email, String phone, String interview) {
+		super();
+		this.id=id;
+		this.name = name;
+		this.sex = sex;
+		this.birthday = birthday;
+		this.email = email;
+		this.phone = phone;
+		this.interview = interview;
+	}
+
+
+
+	public int[] getScores() {
+		return scores;
+	}
+
+
+
+	public void setScores(int[] scores) {
+		this.scores = scores;
+	}
+
+
 
 	public String getId() {
 		return id;

@@ -16,6 +16,19 @@ public class Teacher {
 		
 	}
 
+	
+	public Teacher(String id,String name, String sex, String birthday, String email, String phone, String interview) {
+		super();
+		this.id=id;
+		this.name = name;
+		this.sex = sex;
+		this.birthday = birthday;
+		this.email = email;
+		this.phone = phone;
+		this.interview = interview;
+	}
+
+
 	public String getId() {
 		return id;
 	}

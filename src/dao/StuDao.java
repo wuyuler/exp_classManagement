@@ -29,16 +29,20 @@ public class StuDao {
 			while(rs.next()) {
 				Student stu = new Student();
 				
-				stu.setUsername(rs.getString(Constant.USERNAME_STU));
-				stu.setPassword(rs.getString(Constant.PASSWORD_STU));
-				stu.setId(rs.getString(Constant.ID_STU));
-				stu.setBirthday(rs.getString(Constant.BIRTHDAY_STU));
-				stu.setSex(rs.getString(Constant.SEX_STU));
-				stu.setName(rs.getString(Constant.NAME_STU));
-				stu.setEmail(rs.getString(Constant.EMAIL_STU));
-				stu.setInterview(rs.getString(Constant.INTERVIEW_STU));
-				stu.setPhone(rs.getString(Constant.PHONE_STU));
-				
+				stu.setUsername(rs.getString(Constant.USERNAME));
+				stu.setPassword(rs.getString(Constant.PASSWORD));
+				stu.setId(rs.getString(Constant.ID));
+				stu.setBirthday(rs.getString(Constant.BIRTHDAY));
+				stu.setSex(rs.getString(Constant.SEX));
+				stu.setName(rs.getString(Constant.NAME));
+				stu.setEmail(rs.getString(Constant.EMAIL));
+				stu.setInterview(rs.getString(Constant.INTERVIEW));
+				stu.setPhone(rs.getString(Constant.PHONE));
+				int[] scores = new int[Setting.numOfSubject];
+				for(int i=0;i<Setting.numOfSubject;i++) {
+					scores[i] = rs.getInt("s"+i);
+				}
+				stu.setScores(scores);
 				list.add(stu);
 			}
 		} catch (Exception e) {
@@ -62,7 +66,7 @@ public class StuDao {
 			ResultSet rs = null;
 			
 			try {
-				String sql = "select * from "+Constant.STUTABLE+" where "+Constant.ID_STU+"=?;";
+				String sql = "select * from "+Constant.STUTABLE+" where "+Constant.ID+"=?;";
 				
 				conn = DBhelper.getConnection();
 				stmt = conn.prepareStatement(sql);
@@ -71,15 +75,15 @@ public class StuDao {
 				rs=stmt.executeQuery();
 				if(rs.next()) {
 					Student stu = new Student();
-					stu.setUsername(rs.getString(Constant.USERNAME_STU));
-					stu.setPassword(rs.getString(Constant.PASSWORD_STU));
-					stu.setId(rs.getString(Constant.ID_STU));
-					stu.setBirthday(rs.getString(Constant.BIRTHDAY_STU));
-					stu.setSex(rs.getString(Constant.SEX_STU));
-					stu.setName(rs.getString(Constant.NAME_STU));
-					stu.setEmail(rs.getString(Constant.EMAIL_STU));
-					stu.setInterview(rs.getString(Constant.INTERVIEW_STU));
-					stu.setPhone(rs.getString(Constant.PHONE_STU));
+					stu.setUsername(rs.getString(Constant.USERNAME));
+					stu.setPassword(rs.getString(Constant.PASSWORD));
+					stu.setId(rs.getString(Constant.ID));
+					stu.setBirthday(rs.getString(Constant.BIRTHDAY));
+					stu.setSex(rs.getString(Constant.SEX));
+					stu.setName(rs.getString(Constant.NAME));
+					stu.setEmail(rs.getString(Constant.EMAIL));
+					stu.setInterview(rs.getString(Constant.INTERVIEW));
+					stu.setPhone(rs.getString(Constant.PHONE));
 					
 					
 				return stu;
@@ -109,14 +113,14 @@ public class StuDao {
 			}
 			}
 		
-		//根据id找到学生
+		//根据username找到学生
 				public static  Student getStudentByUsername( String username) {
 					Connection conn=null;
 					PreparedStatement stmt = null;
 					ResultSet rs = null;
 					
 					try {
-						String sql = "select * from "+Constant.STUTABLE+" where "+Constant.USERNAME_STU+"=?;";
+						String sql = "select * from "+Constant.STUTABLE+" where "+Constant.USERNAME+"=?;";
 						
 						conn = DBhelper.getConnection();
 						stmt = conn.prepareStatement(sql);
@@ -125,15 +129,15 @@ public class StuDao {
 						rs=stmt.executeQuery();
 						if(rs.next()) {
 							Student stu = new Student();
-							stu.setUsername(rs.getString(Constant.USERNAME_STU));
-							stu.setPassword(rs.getString(Constant.PASSWORD_STU));
-							stu.setId(rs.getString(Constant.ID_STU));
-							stu.setBirthday(rs.getString(Constant.BIRTHDAY_STU));
-							stu.setSex(rs.getString(Constant.SEX_STU));
-							stu.setName(rs.getString(Constant.NAME_STU));
-							stu.setEmail(rs.getString(Constant.EMAIL_STU));
-							stu.setInterview(rs.getString(Constant.INTERVIEW_STU));
-							stu.setPhone(rs.getString(Constant.PHONE_STU));
+							stu.setUsername(rs.getString(Constant.USERNAME));
+							stu.setPassword(rs.getString(Constant.PASSWORD));
+							stu.setId(rs.getString(Constant.ID));
+							stu.setBirthday(rs.getString(Constant.BIRTHDAY));
+							stu.setSex(rs.getString(Constant.SEX));
+							stu.setName(rs.getString(Constant.NAME));
+							stu.setEmail(rs.getString(Constant.EMAIL));
+							stu.setInterview(rs.getString(Constant.INTERVIEW));
+							stu.setPhone(rs.getString(Constant.PHONE));
 							
 							
 						return stu;
@@ -193,6 +197,7 @@ public class StuDao {
 					stmt.setString(7, email);
 					stmt.setString(8, phone);
 					stmt.setString(9, interview);
+					System.out.println(sql);
 					stmt.executeUpdate();
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -216,7 +221,7 @@ public class StuDao {
 				
 				
 				try {
-					String sql = "delete from "+Constant.STUTABLE+" where "+Constant.ID_STU+"=?;";
+					String sql = "delete from "+Constant.STUTABLE+" where "+Constant.ID+"=?;";
 					
 					conn = DBhelper.getConnection();
 					stmt = conn.prepareStatement(sql);
@@ -251,12 +256,30 @@ public class StuDao {
 				
 				
 				try {
-					String sql2=""+Constant.ID_STU+"='"+stu.getId()+"'";
+					String sql2=""+Constant.ID+"='"+stu.getId()+"'";
 					if(stu.getName()!=null) {
-						 sql2 = sql2+","+Constant.NAME_STU+"='"+stu.getName()+"'";
+						 sql2 = sql2+","+Constant.NAME+"='"+stu.getName()+"'";
 					}
-					String sql = "update "+Constant.STUTABLE+" set "+sql2+" where "+Constant.ID_STU+"='"+stu.getId()+"';";
+					if(stu.getSex()!=null) {
+						 sql2 = sql2+","+Constant.SEX+"='"+stu.getSex()+"'";
+					}
+					if(stu.getBirthday()!=null) {
+						 sql2 = sql2+","+Constant.BIRTHDAY+"='"+stu.getBirthday()+"'";
+					}
+					if(stu.getEmail()!=null) {
+						 sql2 = sql2+","+Constant.EMAIL+"='"+stu.getEmail()+"'";
+					}
+					if(stu.getUsername()!=null) {
+						 sql2 = sql2+","+Constant.USERNAME+"='"+stu.getUsername()+"'";
+					}
+					if(stu.getPassword()!=null) {
+							 sql2 = sql2+","+Constant.PASSWORD+"='"+stu.getPassword()+"'";
+						}
+					if(stu.getPhone()!=null)sql2 = sql2+","+Constant.PHONE+"='"+stu.getPhone()+"'";
+					if(stu.getInterview()!=null)sql2=sql2+","+Constant.INTERVIEW+"='"+stu.getInterview()+"'";
+					String sql = "update "+Constant.STUTABLE+" set "+sql2+" where "+Constant.ID+"='"+stu.getId()+"';";
 					System.out.println(sql);
+					
 					
 					conn = DBhelper.getConnection();
 					stmt = conn.prepareStatement(sql);
@@ -302,7 +325,7 @@ public class StuDao {
 					String sql="";
 					for(int i=0;i<list.size()&&i<scoreList.size();i++) {
 						
-						sql = "update "+Constant.STUTABLE+" set s"+id_subject+"="+scoreList.get(i)+" where "+Constant.ID_STU+"='"+list.get(i).getId()+"';";
+						sql = "update "+Constant.STUTABLE+" set s"+id_subject+"="+scoreList.get(i)+" where "+Constant.ID+"='"+list.get(i).getId()+"';";
 						stmt = conn.prepareStatement(sql);
 						stmt.executeUpdate();
 						System.out.println(sql);
@@ -347,13 +370,13 @@ public class StuDao {
 			
 			for(Student stu:list) {
 				if(id.equals(stu.getId()))
-					return true;
+					return false;
 			}
-			return false;
+			return true;
 		}
 		
 		//判断是否是新建帐号
-		public static Boolean FirstCreateUsername(String id) {
+		public static Boolean isFirstCreateUsername(String id) {
 			
 			Student stu=StuDao.getStudentById(id);
 			System.out.println(stu.getName()+stu.getUsername());
@@ -408,7 +431,7 @@ public class StuDao {
 //			e.printStackTrace();
 //		}
 //		for(Student stu:list) {
-//			System.out.println(stu.getName());
+//			System.out.println(stu.getScores()[1]);
 //	}
 		
 //		//测试findbyid
@@ -437,10 +460,18 @@ public class StuDao {
 //		StuDao.delectStuByID("99999999");
 //		if(StuDao.getStudentById("99999999")==null)System.out.println("删除成功");
 //		else System.out.println("删除失败");
+		//测试插入学生
+		Student stu = new Student();
+		stu.setId("110");
+		stu.setName("凯");
+		stu.setSex("男");//性别不能为空
+		StuDao.insertStudent(stu);
 		
 //		//测试修改信息
 //		Student stu = new Student();
 //		stu.setId("1600200010");
+//		stu.setName("唐永金");
+//		stu.setEmail("971680807@qq.com");
 //		
 //		StuDao.updateInfo(stu);
 		
