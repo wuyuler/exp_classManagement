@@ -11,7 +11,18 @@
 </head>
 <body>
 <h1>管理员主页</h1>
+<script>
 
+function doValidate(){
+	var	idReg=/^16\d{8}$/;
+	if(!idReg.test(document.addInfo.id.value)){
+		alert('id格式不正确,16开头,共10位');
+		document.addInfo.id.focus();
+		return false;
+	}
+	return true;
+}
+</script>
 <table>
 <tr>
 <td>
@@ -35,7 +46,7 @@
 添加
 </td>
 <td>
-<form action="AddServlet" method="post">
+<form action="AddServlet" name="addInfo" method="post" onsubmit="return doValidate()">
 <table border="5">
 <tr>
 <td>ID：</td><td><input type = "text" name="id"  > </td>
